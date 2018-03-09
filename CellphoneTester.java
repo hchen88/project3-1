@@ -26,13 +26,15 @@ public class CellphoneTester {
 			userInput = in.nextLine().trim(); 
 			if (userInput.equals("1")) {
 				//receives a call
+				
 			}
 			else if (userInput.equals("2")) {
 				System.out.println("Choose an option: \n1. By using phone number. \n2. By using contact. \3. By using preset favorite.");
 				String callInput = in.nextLine().trim();
 				if (callInput.equals("1")) { //makes call by using phone number
 					System.out.println("Enter a ten digit phone number:");
-					String phoneNumber = in.nextLine().trim(); 
+					String phoneNumber = in.nextLine().trim();
+					
 					numberBook.put(phoneNumber, new Contact(phoneNumber));
 					numberBook.get(phoneNumber).updateOutgoingCounter();
 					numberBook.get(phoneNumber).setTimeStamp();
@@ -50,8 +52,9 @@ public class CellphoneTester {
 							System.out.println("Would you like to call " + contactName + "?\n1. Yes \n2. No");
 							String call = in.nextLine().trim();
 							if (call.equals("1")) { 
-								receivedContact.updateOutgoingCounter();
+								receivedContact.makeCall();
 								receivedContact.setTimeStamp();
+								System.out.println("Making call to " +  contactName);
 							}
 							option = "2"; 
 						} 
@@ -63,6 +66,9 @@ public class CellphoneTester {
 				}
 				else if(callInput.equals("3")) { //makes call by using preset favorites
 					// CALLS USING PRESETS
+					System.out.println("Enter a preset number:");
+					int presetNum = in.nextInt();
+					
 				}
 			}
 			else if (userInput.equals("3")) {
@@ -78,6 +84,7 @@ public class CellphoneTester {
 					System.out.println("Enter any notes:");
 					String notes = in.nextLine().trim();
 					phoneBook.addContact(contactName, new Contact(contactName, phoneNumber, email, notes));
+					System.out.println("New contact added.");
 				}
 				else if (option.equals("2")) {
 					System.out.println("Enter the name of the contact to be editted:");
@@ -97,6 +104,7 @@ public class CellphoneTester {
 						System.out.println("Enter any new notes:");
 						String newNotes = in.nextLine().trim();
 						receivedContact.editNotes(newNotes);
+						System.out.println("Contact editted.");
 					}
 					else {
 						System.out.println("This contact is not in the phonebook.");
@@ -108,6 +116,7 @@ public class CellphoneTester {
 					boolean found = phoneBook.checkPhonebook(name);
 					if (found) {
 						phoneBook.delContact(name);
+						System.out.println("Contact deleted.");
 					}
 					else {
 						System.out.println("This contact is already not in the phonebook.");
@@ -148,6 +157,7 @@ public class CellphoneTester {
 						int presetNum = in.nextInt();
 						Contact receivedContact = phoneBook.getContact(contact);
 						presetList.addPreset(presetNum, receivedContact);
+						System.out.println("Preset added.");
 					}else {
 						System.out.println("Contact doesn't exist in the phonebook.");
 					}
@@ -156,6 +166,7 @@ public class CellphoneTester {
 					System.out.println("Enter preset number you would like to delete:");
 					int presetNum = in.nextInt();
 					presetList.deletePreset(presetNum);
+					System.out.println("Preset deleted");
 				}else if(option.equals("4")) {
 					//REARRANGE PRESETS
 					System.out.println("You will enter 2 preset numbers to swap the order.");
@@ -164,6 +175,7 @@ public class CellphoneTester {
 					System.out.println("Enter second preset number:");
 					int presetNum2 = in.nextInt();
 					presetList.rearrangePreset(presetNum1, presetNum2);
+					System.out.println("Presets rearranged.");
 				}
 			}
 			else if (userInput.equals("6")) {
