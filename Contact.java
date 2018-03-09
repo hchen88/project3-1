@@ -2,6 +2,7 @@ package edu.project3;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Contact {
 	
@@ -12,6 +13,9 @@ public class Contact {
 	private int outgoingCounter = 0;
 	private int incomingCounter = 0;
 	private ArrayList <String> timeStamps = new ArrayList<String>();
+	
+	private static HashMap<String, Contact> callLogMap = new HashMap<String, Contact>();
+	private static HashMap<String, Contact> callLogMultOccurrences = new HashMap<String, Contact>();
 	
 	/**
 	 * creates a default contact object
@@ -91,11 +95,11 @@ public class Contact {
 		this.notes = notes;
 	}
 	
-	public void updateOutgoingCounter() {
+	public void makeCall() {
 		outgoingCounter++;
 	}
 	
-	public void updateIncomingCounter() {
+	public void receiveCall() {
 		incomingCounter++;
 	}
 	
@@ -105,7 +109,7 @@ public class Contact {
 	
 	public int getIncomingCounter() {
 		return incomingCounter;
-	}
+	}	
 	
 	public void setTimeStamp() {
 		
