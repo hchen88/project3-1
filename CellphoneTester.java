@@ -17,6 +17,7 @@ public class CellphoneTester {
 		Scanner in = new Scanner(System.in);
 		String userInput; 
 		PhoneBook phoneBook = new PhoneBook();
+		PresetList presetList = new PresetList();
 		//TreeMap<String, Contact> phoneBook = new TreeMap<String, Contact>();
 		//TreeMap<String, Contact> numberBook = new TreeMap<String, Contact>();
 	
@@ -135,23 +136,34 @@ public class CellphoneTester {
 				String option = in.nextLine().trim();
 				if(option.equals("1")) {
 					//DISPLAY PRESETS
+					System.out.println("Your Presets:\n");
+					System.out.println(presetList);
 				}else if(option.equals("2")) {
 					//ADD PRESET
 					System.out.println("Enter contact you would like to preset: ");
 					String contact = in.nextLine().trim();
 					boolean found = phoneBook.checkPhonebook(contact);
 					if(found) {
-						System.out.println("Enter preset number: ");
+						System.out.println("Enter preset number (1-5): ");
 						int presetNum = in.nextInt();
-						
+						Contact receivedContact = phoneBook.getContact(contact);
+						presetList.addPreset(presetNum, receivedContact);
 					}else {
 						System.out.println("Contact doesn't exist in the phonebook.");
 					}
-					
 				}else if(option.equals("3")) {
 					//DELETE PRESET
+					System.out.println("Enter preset number you would like to delete:");
+					int presetNum = in.nextInt();
+					presetList.deletePreset(presetNum);
 				}else if(option.equals("4")) {
 					//REARRANGE PRESETS
+					System.out.println("You will enter 2 preset numbers to swap the order.");
+					System.out.println("Enter first preset number:");
+					int presetNum1 = in.nextInt();
+					System.out.println("Enter second preset number:");
+					int presetNum2 = in.nextInt();
+					presetList.rearrangePreset(presetNum1, presetNum2);
 				}
 			}
 			else if (userInput.equals("6")) {
