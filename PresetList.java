@@ -51,7 +51,7 @@ public class PresetList {
 		presetContactList[presetNum2 - 1] = copyObj;
 		
 	}
-	
+		
 	public String toString() {
 		String str = "";
 		for (String s : presetStringList) {
@@ -64,4 +64,3 @@ public class PresetList {
 	
 
 }
-
