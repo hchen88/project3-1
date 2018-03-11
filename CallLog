@@ -1,0 +1,57 @@
+package edu.project3;
+
+import java.util.HashMap;
+
+public class CallLog extends Contact {
+	
+	private HashMap<String, String> callLog = new HashMap<String, String>(); // key- Number , value - toString 
+	//private HashMap<String, String> detailedCallLog = new HashMap<String, String>(); 
+
+	public CallLog(){
+		
+	}
+	
+	/**
+	 * this method returns string with call log.
+	 * @return 
+	 */
+//	public String displayCalllog() {
+//		String str = "";
+//		for(Contact value : callLog.values() ) {
+//			str +=  value +  "\n";
+//		}
+//		return str;
+//	}
+	
+	/**
+	 * this method returns string with detailed call log.
+	 * @return 
+	 */
+//	public String displayDetailedCalllog() {
+//		String str = "";
+//		for(Contact value : detailedCallLog.values() ) {
+//			str +=  value +  "\n";
+//		}
+//			return str;
+//	}
+	
+	
+	/**
+	 * 
+	 * @param number
+	 * @param Contact
+	 */
+	public void addCall(String number, Contact Contact) {
+		callLog.put(number, Contact.formatCall());
+	}
+	
+	/**
+	 * 
+	 */
+	
+	public String toString() {
+		String str = "";
+				
+		return str;
+	}
+}
