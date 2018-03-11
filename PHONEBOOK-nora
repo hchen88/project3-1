@@ -1,33 +1,36 @@
 package edu.project3;
 
-import java.util.Set;
 import java.util.TreeMap;
 
 public class PhoneBook {
-	
 	/**
-	 * Stores all contacts
-Adds/Deletes contact
-Displays contacts in alphabetical order
-
+	 * creates a phone book that stores all of the contacts
 	 */
-	
 	private static TreeMap<String, Contact> phoneBookMap = new TreeMap<String, Contact>();
 	
+	
+	/**
+	 * creates a new phone book
+	 */
 	public PhoneBook() {
 		
 	}
 	
+	/**
+	 * returns a contact if in the phone book
+	 * @param contactName
+	 * @return
+	 */
 	public Contact getContact(String contactName) {
 		return phoneBookMap.get(contactName);
 	}
 
 	/**
-	 * This method adds a new element to phoneBookMap with the key as a 
+	 * adds a new element to phoneBookMap with the key as a 
 	 * string and the value as an object.
-	 * @param contactName- String variable for each contact
-	 * @param contactObj- Object for each contact
-	 ***/
+	 * @param contactName
+	 * @param contactObj
+	 */
 	public void addContact(String contactName, Contact contactObj   ) {
 		
 		phoneBookMap.put(contactName, contactObj);
@@ -35,16 +38,19 @@ Displays contacts in alphabetical order
 	}
 	
 	/**
-	 * This method deletes the element with a specific contact name.
-	 * @param contactName - string variable for contact name 
+	 * deletes the element with a specific contact name.
+	 * @param contactName
 	 */
 	public void delContact(String contactName) {
-		
 		phoneBookMap.remove(contactName);
 		
 	}
 	
-	
+	/**
+	 * returns true if the contact is in the phone book
+	 * @param contactName
+	 * @return
+	 */
 	public boolean checkPhonebook(String contactName) {
 		
 		boolean found = false;
@@ -56,6 +62,11 @@ Displays contacts in alphabetical order
 		return found;
 	}
 	
+	/**
+	 * returns the contact if found in the phone book searched using name
+	 * @param contactName
+	 * @return
+	 */
 	public Contact checkPhonebookContact(String contactName) {
 		Contact contact = null; 
 		for( String key : phoneBookMap.keySet()) {
@@ -66,6 +77,11 @@ Displays contacts in alphabetical order
 		return contact;
 	}
 	
+	/**
+	 * returns the contact if found in the phone book searched using number
+	 * @param contactName
+	 * @return
+	 */
 	public Contact checkNumPhonebook(String number) {
 		Contact contact = null;
 		for (String key : phoneBookMap.keySet()) {
@@ -77,16 +93,55 @@ Displays contacts in alphabetical order
 	}
 	
 	/**
-	 * This is a method 
+	 * formats the call log
+	 * @return
+	 */
+	public String callLog() {
+		String str = "";
+        for(String key: phoneBookMap.keySet()){
+        		if (phoneBookMap.get(key) != null) {
+        			if(phoneBookMap.get(key).getTotalCalls() > 0) {
+        				str += phoneBookMap.get(key).formatCall();
+        			}
+        		}
+        }
+        if (str.isEmpty()) {
+        	 str = "There are no calls";
+        }
+		return str;
+	}
+	
+	/**
+	 * formats the detailed call log
+	 * @return
+	 */
+	public String detailedCallLog() {
+		String str = "";
+        for(String key: phoneBookMap.keySet()){
+        		if (phoneBookMap.get(key) != null) {
+        			if(phoneBookMap.get(key).getTotalCalls() > 0) {
+        				str += phoneBookMap.get(key).formatDetailedCall();
+        			}
+        		}
+        }
+		return str;
+	}
+	
+	/**
+	 * formats and returns the toString
 	 */
 	public String toString() {
 		String str = "";
-		Set<String> keys = phoneBookMap.keySet();
-        for(String key: keys){
-            System.out.println(phoneBookMap.get(key));
+        for(String key: phoneBookMap.keySet()){
+    		if (phoneBookMap.get(key) != null) {
+    			if (!phoneBookMap.get(key).getName().equals("N/A")) {
+    				str += phoneBookMap.get(key) + "\n";
+    				}
+    			}
         }
-	    return str;
+        if (str.isEmpty()) { 
+        		str = "No Phonebook";
+        }
+        return str;
 	}
-	
-	
 }
