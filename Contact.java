@@ -2,7 +2,6 @@ package edu.project3;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Contact {
 	
@@ -13,9 +12,12 @@ public class Contact {
 	private int outgoingCounter = 0;
 	private int incomingCounter = 0;
 	private ArrayList <String> timeStamps = new ArrayList<String>();
+	//private ArrayList <String> callType = new ArrayList<String>();
+	public static ArrayList<String> callLogArray = new ArrayList<String>();
 	
-	private static HashMap<String, Contact> callLogMap = new HashMap<String, Contact>();
-	private static HashMap<String, Contact> callLogMultOccurrences = new HashMap<String, Contact>();
+	
+	
+
 	
 	/**
 	 * creates a default contact object
@@ -95,8 +97,43 @@ public class Contact {
 		this.notes = notes;
 	}
 	
+	//set time stamp.
 	public void makeCall() {
 		outgoingCounter++;
+		
+	}
+	
+	public String formatCall() {
+		
+		String str = "";
+		if (incomingCounter >= 1) { 
+			str = number + "\n" + timeStamps.get(timeStamps.size() -1) + "\t(Incoming)";
+		} else if (outgoingCounter > 1 && name.equals("N/A")) {
+			str = number + "\t("+ outgoingCounter + ")\n" + timeStamps.get(timeStamps.size()-1) + "\t(Outgoing)";
+			
+		}else if (outgoingCounter > 1 && !(name.equals("N/A"))){
+			str = name + "\t(" + outgoingCounter + ")\n" + timeStamps.get(timeStamps.size() -1) + "\t(Outgoing)"; 
+		}else {
+			str = name + "\n" + timeStamps.get(timeStamps.size() -1) + "\t(Outgoing)"; 
+		}
+		
+		return str;
+	}
+	
+	public String formatDetailedCall() {
+		String str = "";
+		
+		for( String time : timeStamps) {
+			if (incomingCounter >= 1) { 
+				str += number + "\n" + time + "\t(Incoming)";
+			} else if (outgoingCounter > 1 && name.equals("N/A")) {
+				str += number + "\n" + time + "\t(Outgoing)";
+				
+			}else if (outgoingCounter > 1 && !(name.equals("N/A"))){
+				str += name +  "\n" + time + "\t(Outgoing)"; 
+			}
+		}
+		return str;
 	}
 	
 	public void receiveCall() {
@@ -141,9 +178,14 @@ public class Contact {
 		return timeStamps; 
 	}
 	
-	public String toString() {
-		String str = this.name + "\t" + this.number + "\t" + this.email + "\t" + this.notes;
+	public String toString() { //single contact information
+		String str ="";
+		
+		if (this.name.equals("N/A")) {
+			str = this.number;
+		}else {
+			str = this.name + "\t" + this.number + "\t" + this.email + "\t" + this.notes;
+		}
 		return str;
 	}
-	
 }
