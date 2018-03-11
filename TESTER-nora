@@ -25,7 +25,15 @@ public class CellphoneTester {
 			userInput = in.nextLine().trim(); 
 			if (userInput.equals("1")) {
 				//RECEIVES A CALL
-				System.out.println("Receiving a call from...");	
+				String incomingNum = "5628659087";
+				System.out.println("Receiving a call from " + incomingNum);
+				if (phoneBook.checkNumPhonebook(incomingNum) == null) {
+					phoneBook.addContact("incomingCall", new Contact(null, "5628659087", null, null, 0, 1));
+				}
+				else {
+					phoneBook.checkNumPhonebook(incomingNum).receiveCall();
+					phoneBook.checkNumPhonebook(incomingNum).setTimeStamp();
+				}
 			}
 			else if (userInput.equals("2")) {
 				//MAKES A CALL
@@ -38,12 +46,18 @@ public class CellphoneTester {
 					if (phoneBook.checkNumPhonebook(phoneNumber) == null) {
 						unknownCounter++;
 						String unknownName = Integer.toString(unknownCounter);
-						phoneBook.addContact(unknownName, new Contact(null, phoneNumber, null, null, 1));
-						System.out.println("Making a call to" + phoneNumber);
+						phoneBook.addContact(unknownName, new Contact(null, phoneNumber, null, null, 1, 0));
+						System.out.println("Making call to:" + phoneBook.checkNumPhonebook(phoneNumber).formatNum());
 					}
 					else {
-						System.out.println("Contact matching number found! \n Making Call to " + phoneBook.checkNumPhonebook(phoneNumber).getName());
-						phoneBook.checkNumPhonebook(phoneNumber).makeCall();
+						if (phoneBook.checkNumPhonebook(phoneNumber).getName().equals("N/A")) {
+							System.out.println("Making call to:" + phoneBook.checkNumPhonebook(phoneNumber).formatNum());
+							phoneBook.checkNumPhonebook(phoneNumber).makeCall();
+						}
+						else {
+							System.out.println("Contact matching number found! \n Making Call to " + phoneBook.checkNumPhonebook(phoneNumber).getName());
+							phoneBook.checkNumPhonebook(phoneNumber).makeCall();
+						}
 					}
 				}
 				else if (callInput.equals("2")) { 
@@ -53,7 +67,7 @@ public class CellphoneTester {
 						System.out.println("Enter a contact name:");
 						String contactName = in.nextLine().trim();
 						if (phoneBook.checkPhonebookContact(contactName) == null) {
-							System.out.println("Select an option: \n1. Enter a name again. \n2. Go to main menu.");
+							System.out.println("Contact is not in phonebook: \n1. Enter a name again. \n2. Go to main menu.");
 							option = in.nextLine().trim();
 						} 
 						else {
@@ -70,8 +84,16 @@ public class CellphoneTester {
 				}
 				else if(callInput.equals("3")) { 
 					//MAKES A CALL USING PRESETS
+					System.out.println(presetList);
 					System.out.println("Enter a preset number:");
 					int presetNum = in.nextInt();
+					if (presetList.getPreset(presetNum) == null) {
+						System.out.println("Sorry there is no preset favorite for that number");
+					}
+					else {
+						presetList.getPreset(presetNum).makeCall();
+						System.out.println("Making call to " + presetList.getPreset(presetNum).getName());
+					}
 				}
 			}
 			else if (userInput.equals("3")) {
@@ -88,12 +110,12 @@ public class CellphoneTester {
 					String email = in.nextLine().trim();
 					System.out.println("Enter any notes:");
 					String notes = in.nextLine().trim();
-					phoneBook.addContact(contactName, new Contact(contactName, phoneNumber, email, notes, 0));
+					phoneBook.addContact(contactName, new Contact(contactName, phoneNumber, email, notes, 0, 0));
 					System.out.println("New contact added.");
 				}
 				else if (option.equals("2")) {
 					//EDITS A CONTACT
-					System.out.println("Enter the name of the contact to be editted:");
+					System.out.println("Enter the name of the contact to be edited:");
 					String contactName = in.nextLine().trim();
 					if (phoneBook.checkPhonebookContact(contactName) == null) {
 						System.out.println("This contact is not in the phonebook.");
@@ -150,7 +172,6 @@ public class CellphoneTester {
 				String option = in.nextLine().trim();
 				if(option.equals("1")) {
 					//DISPLAY PRESETS
-					System.out.println("Your Presets:\n");
 					System.out.println(presetList);
 				}else if(option.equals("2")) {
 					//ADD PRESET
@@ -180,14 +201,16 @@ public class CellphoneTester {
 					int presetNum2 = in.nextInt();
 					presetList.rearrangePreset(presetNum1, presetNum2);
 					System.out.println("Presets rearranged.");
+					System.out.println(presetList);
 				}
 			}
 			else if (userInput.equals("6")) {
 				// DISPLAY CALL LOG
+				System.out.println(phoneBook.callLog());
 				System.out.println("Enter 1 if you would like to see more details of the call log.\nIf not, then enter anything else to go back to the main menu.");
 				String option = in.nextLine().trim();
 				if(option.equals("1")) {
-					//DETAILED CALL LOG (Multiple occurrences)
+					System.out.println(phoneBook.detailedCallLog());
 				}
 			}
 		}while (!userInput.equals("7")); 
@@ -195,5 +218,3 @@ public class CellphoneTester {
 		in.close();
 	}
 }
-
-
