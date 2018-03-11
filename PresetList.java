@@ -7,8 +7,8 @@ public class PresetList {
 	String copy = "";
 	Contact copyObj = new Contact();
 	
-	private Contact[] presetContactList = new Contact[5];
-	private String[] presetStringList = new String[5];
+	private static Contact[] presetContactList = new Contact[5];
+	private static String[] presetStringList = new String[5];
 	
 	public PresetList() {
 		
@@ -50,6 +50,14 @@ public class PresetList {
 		presetStringList[presetNum2 - 1] = copy;
 		presetContactList[presetNum2 - 1] = copyObj;
 		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String[] getPresetContactList() {
+		return presetStringList;
 	}
 		
 	public String toString() {
