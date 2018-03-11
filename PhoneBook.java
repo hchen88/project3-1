@@ -12,10 +12,17 @@ Displays contacts in alphabetical order
 
 	 */
 	
-	private TreeMap<String, Contact> phoneBookMap = new TreeMap<String, Contact>();
+	private static TreeMap<String, Contact> phoneBookMap = new TreeMap<String, Contact>();
 	
 	public PhoneBook() {
 		
+	}
+	/**
+	 * This method is used to get phoneBookMap
+	 * @returns phoneBookmap
+	 */
+	public TreeMap<String, Contact> getphoneBookMap() {
+		return phoneBookMap;
 	}
 	
 	public Contact getContact(String contactName) {
@@ -29,8 +36,12 @@ Displays contacts in alphabetical order
 	 * @param contactObj- Object for each contact
 	 ***/
 	public void addContact(String contactName, Contact contactObj   ) {
-		
-		phoneBookMap.put(contactName, contactObj);
+		if ( !phoneBookMap.containsKey(contactName)) {
+			phoneBookMap.put(contactName, contactObj);
+		} else {
+			System.out.println("Contact already added!");
+		}
+
 		
 	}
 	
@@ -59,7 +70,7 @@ Displays contacts in alphabetical order
 	/**
 	 * This is a method 
 	 */
-	public String toString() {
+	public String toString() { //all contact information
 		String str = "";
 		Set<String> keys = phoneBookMap.keySet();
         for(String key: keys){
