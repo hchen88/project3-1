@@ -1,11 +1,13 @@
 package edu.project3;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class CellphoneTester {
+
 
 	public static String mainMenu() {
 		String mainMenu = "	---Main Menu--- \n1. Receive A Call \n2. Make A Call \n3. Modify Phonebook \n4. Display Phonebook \n5. Preset Favorites \n"
@@ -18,6 +20,8 @@ public class CellphoneTester {
 		String userInput; 
 		PhoneBook phoneBook = new PhoneBook();
 		PresetList presetList = new PresetList();
+		CallLog callLog = new CallLog();
+		
 		//TreeMap<String, Contact> phoneBook = new TreeMap<String, Contact>();
 		//TreeMap<String, Contact> numberBook = new TreeMap<String, Contact>();
 	
@@ -29,15 +33,23 @@ public class CellphoneTester {
 				
 			}
 			else if (userInput.equals("2")) {
-				System.out.println("Choose an option: \n1. By using phone number. \n2. By using contact. \3. By using preset favorite.");
+				System.out.println("Choose an option: \n1. By using phone number. \n2. By using contact. \n3. By using preset favorite.");
 				String callInput = in.nextLine().trim();
 				if (callInput.equals("1")) { //makes call by using phone number
 					System.out.println("Enter a ten digit phone number:");
 					String phoneNumber = in.nextLine().trim();
-					
-					numberBook.put(phoneNumber, new Contact(phoneNumber));
-					numberBook.get(phoneNumber).updateOutgoingCounter();
-					numberBook.get(phoneNumber).setTimeStamp();
+					PhoneBook phoneBookObj = new PhoneBook(); //instantiates PhoneBook Object
+					TreeMap<String, Contact> phoneBookMap = phoneBookObj.getphoneBookMap();  // calls phoneBookMap and assigns it to local variable
+					for(Map.Entry<String,Contact> entry : phoneBookMap.entrySet()) {
+						  String key = entry.getKey();
+						  Contact value = entry.getValue(); // value of object type
+						  if ( phoneNumber.equals(value.getNum())) { //checks if number entered is already an existing contact
+							  value.makeCall();
+							  value.setTimeStamp();
+							  System.out.println("Making call to" + value.getName()); //makes call to the contact.
+							  														 // need to implement a case where phone number is not in phonebook.
+						}
+					}
 				}
 				else if (callInput.equals("2")) { //makes call by using contact
 					String option;
@@ -180,11 +192,9 @@ public class CellphoneTester {
 			}
 			else if (userInput.equals("6")) {
 				// DISPLAY CALL LOG
-				System.out.println("Enter 1 if you would like to see more details of the call log.\nIf not, then enter anything else to go back to the main menu.");
-				String option = in.nextLine().trim();
-				if(option.equals("1")) {
-					//DETAILED CALL LOG (Multiple occurrences)
-				}
+				
+					
+				
 			}
 		}while (!userInput.equals("7")); 
 		System.out.println("Goodbye");
