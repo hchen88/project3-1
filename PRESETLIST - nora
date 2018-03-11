@@ -1,21 +1,27 @@
 package edu.project3;
 
+
 public class PresetList {
-	//Adds, delete, rearrange, and displays preset list
-	//String[] presetStringList = new String[5];
-	//Contact[] presetContactList = new Contact[5]; 
+	/**
+	 * Adds, delete, rearrange, and displays preset list
+	 */
+
 	String copy = "";
 	Contact copyObj = new Contact();
 	
 	private Contact[] presetContactList = new Contact[5];
 	private String[] presetStringList = new String[5];
 	
+	/**
+	 * creates a new preset list
+	 */
+	
 	public PresetList() {
 		
 	}
 	
 	/**
-	 * 
+	 * adds a preset favorite
 	 * @param presetNum
 	 * @param contactObj
 	 */
@@ -27,7 +33,7 @@ public class PresetList {
 	}
 	
 	/**
-	 * 
+	 * removes a preset favorite
 	 * @param presetNum
 	 */
 	public void deletePreset(int presetNum) {
@@ -37,7 +43,7 @@ public class PresetList {
 	}
 	
 	/**
-	 * 
+	 * rearranges preset favorites
 	 * @param presetNum1
 	 * @param presetNum2
 	 */
@@ -51,12 +57,30 @@ public class PresetList {
 		presetContactList[presetNum2 - 1] = copyObj;
 		
 	}
-		
+	
+	/**
+	 * returns the preset favorite contact in order to call
+	 * @param presetNum
+	 * @return
+	 */
+	public Contact getPreset(int presetNum) {
+		 return presetContactList[presetNum - 1]; 
+	}
+	
+	/**
+	 * formats and returns toString
+	 */
 	public String toString() {
-		String str = "";
-		for (String s : presetStringList) {
-			str += s;
-			str += "\n";
+		String str = "Presets:\n";
+		for (int i = 0; i < presetStringList.length; i++) {
+			int contactNum = i + 1;
+			str += Integer.toString(contactNum) + ". ";
+			if (presetStringList[i] == null) {
+				str += " \n";
+			}
+			else {
+				str += presetStringList[i] + "\n";
+			}
 		}
 		
 		return str;
