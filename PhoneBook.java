@@ -102,4 +102,4 @@ Displays contacts in alphabetical order
         }
 	    return str;
 	}
-
+}
