@@ -108,7 +108,13 @@ public class Contact {
 		if (this.name.equals("N/A")) {
 			str = this.number;
 		}else {
-			String numFormat = "(" + this.number.substring(0,3) + ")" + this.number.substring(3,6) + "-" + this.number.substring(6); 
+			String numFormat = "";
+			if(this.number.length()==10) {
+				numFormat = "(" + this.number.substring(0,3) + ")" + this.number.substring(3,6) + "-" + this.number.substring(6);
+			}
+			else {
+				numFormat = this.number.substring(0,3) + "-" + this.number.substring(3);
+			}
 			str = this.name + "\t" + numFormat + "\t" + this.email + "\t" + this.notes;
 		}
 		return str;
