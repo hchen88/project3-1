@@ -1,23 +1,11 @@
 package edu.project3;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 public class Contact {
 	
 	private String name = "N/A";
 	private String number= "";
 	private String email = "";
 	private String notes = "";
-	private int outgoingCounter = 0;
-	private int incomingCounter = 0;
-	private ArrayList <String> timeStamps = new ArrayList<String>();
-	//private ArrayList <String> callType = new ArrayList<String>();
-	public static ArrayList<String> callLogArray = new ArrayList<String>();
-	
-	
-	
-
 	
 	/**
 	 * creates a default contact object
@@ -25,7 +13,7 @@ public class Contact {
 	public Contact() {
 
 	}
-	
+	  
 	/**
 	 * creates a contact object with a given name and number
 	 * @param name is a string variable with a name.
@@ -51,7 +39,6 @@ public class Contact {
 	 * this is a method that returns a string variable number
 	 * @return the string number variable 
 	 */
-	
 	public String getNum() {
 		return this.number;
 	}
@@ -64,14 +51,21 @@ public class Contact {
 		return this.name;
 	}
 	
+	/**
+	 * this method returns a string email
+	 * @return the string email variable
+	 */
 	public String getEmail() {
 		return this.email;
 	}
 	
+	/**
+	 * this method returns a string notes
+	 * @return the string notes variable
+	 */
 	public String getNotes() {
 		return this.notes;
 	}
-	
 	
 	/**
 	 * this method sets/edits the name 
@@ -89,102 +83,33 @@ public class Contact {
 		this.number = number;
 	}
 	
+	/**
+	 * this method edits the email variable
+	 * @param email - String email varaible
+	 */
 	public void editEmail(String email) {
 		this.email = email;
 	}
 	
+	/**
+	 * this method edits the notes variable
+	 * @param notes - String notes variable
+	 */
 	public void editNotes(String notes) {
 		this.notes = notes;
 	}
-	
-	//set time stamp.
-	public void makeCall() {
-		outgoingCounter++;
-		
-	}
-	
-	public String formatCall() {
-		
-		String str = "";
-		if (incomingCounter >= 1) { 
-			str = number + "\n" + timeStamps.get(timeStamps.size() -1) + "\t(Incoming)";
-		} else if (outgoingCounter > 1 && name.equals("N/A")) {
-			str = number + "\t("+ outgoingCounter + ")\n" + timeStamps.get(timeStamps.size()-1) + "\t(Outgoing)";
 			
-		}else if (outgoingCounter > 1 && !(name.equals("N/A"))){
-			str = name + "\t(" + outgoingCounter + ")\n" + timeStamps.get(timeStamps.size() -1) + "\t(Outgoing)"; 
-		}else {
-			str = name + "\n" + timeStamps.get(timeStamps.size() -1) + "\t(Outgoing)"; 
-		}
-		
-		return str;
-	}
-	
-	public String formatDetailedCall() {
-		String str = "";
-		
-		for( String time : timeStamps) {
-			if (incomingCounter >= 1) { 
-				str += number + "\n" + time + "\t(Incoming)";
-			} else if (outgoingCounter > 1 && name.equals("N/A")) {
-				str += number + "\n" + time + "\t(Outgoing)";
-				
-			}else if (outgoingCounter > 1 && !(name.equals("N/A"))){
-				str += name +  "\n" + time + "\t(Outgoing)"; 
-			}
-		}
-		return str;
-	}
-	
-	public void receiveCall() {
-		incomingCounter++;
-	}
-	
-	public int getOutgoingCounter() {
-		return outgoingCounter; 
-	}
-	
-	public int getIncomingCounter() {
-		return incomingCounter;
-	}	
-	
-	public void setTimeStamp() {
-		
-		String now = LocalDateTime.now().toString();
-		String year = now.substring(0,4);
-		String month = now.substring(5,7);
-		String day = now.substring(8, 10);
-		String minute = now.substring(14,16);
-		String hour_24 = now.substring(11,13);
-		String hour_12;
-		String timeFormat;
-		
-		if (Integer.parseInt(hour_24) > 12) {
-			hour_12 = Integer.toString(Integer.parseInt(hour_24) - 12);
-			timeFormat = hour_12 + ":" + minute + " PM";
-
-			}
-		else {
-			hour_12 = Integer.toString(Integer.parseInt(hour_24) + 12);
-			timeFormat = hour_12 + ":" + minute + " AM";
-			}
-		
-		String timeStamp = month + "/" + day + "/" + year + "/t" + timeFormat;
-		
-		timeStamps.add(timeStamp);
-	}
-	
-	public ArrayList<String> getTimeStamps() {
-		return timeStamps; 
-	}
-	
+	/**
+	 * Formats the contact objects
+	 */
 	public String toString() { //single contact information
 		String str ="";
 		
 		if (this.name.equals("N/A")) {
 			str = this.number;
 		}else {
-			str = this.name + "\t" + this.number + "\t" + this.email + "\t" + this.notes;
+			String numFormat = "(" + this.number.substring(0,3) + ")" + this.number.substring(3,6) + "-" + this.number.substring(6); 
+			str = this.name + "\t" + numFormat + "\t" + this.email + "\t" + this.notes;
 		}
 		return str;
 	}
