@@ -1,15 +1,19 @@
 package edu.project3;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class PresetList {
 	String copy = "";
 	private static Contact[] presetContactList = new Contact[5];
-	private static String[] presetStringList = new String[5];
+	private static ArrayList<String> presetStringList = new ArrayList<String>();
+
 	
 	/**
 	 * makes preset list object
 	 */
 	public PresetList() {
-		
+
 	}
 	
 	/**
@@ -18,7 +22,7 @@ public class PresetList {
 	 * @param contactObj - contact object
 	 */
 	public static void addPreset(int presetNum, Contact contactObj) {
-		presetStringList[presetNum - 1 ] =  contactObj.getName();
+		presetStringList.add(presetNum - 1, contactObj.getName());
 		presetContactList[presetNum-1] = contactObj;
 	}
 	
@@ -27,7 +31,7 @@ public class PresetList {
 	 * @param presetNum - preset number
 	 */
 	public static void deletePreset(int presetNum) {
-		presetStringList[presetNum - 1] =  null;
+		presetStringList.remove(presetNum);
 		presetContactList[presetNum-1] = null;
 	}
 	
@@ -39,11 +43,14 @@ public class PresetList {
 	
 	public static void rearrangePreset(int presetNum1, int presetNum2) {
 		
-		String copy = presetStringList[presetNum1 - 1];
+		String copy = presetStringList.get(presetNum1-1); 
+		String copy2 = presetStringList.get(presetNum2-1);
 		Contact copyObj = presetContactList[presetNum1 - 1];
-		presetStringList[presetNum1 -1] = presetStringList[presetNum2 - 1];
+		presetStringList.remove(presetNum1-1);
+		presetStringList.add(presetNum1-1, copy);
+		presetStringList.remove(presetNum2-1);
+		presetStringList.add(presetNum2 -1, copy2);
 		presetContactList[presetNum1 -1] = presetContactList[presetNum2 - 1];
-		presetStringList[presetNum2 - 1] = copy;
 		presetContactList[presetNum2 - 1] = copyObj;
 		
 	}
@@ -61,15 +68,12 @@ public class PresetList {
 	 */
 	public String toString() {
 		String str = "";
+		int i = 0;
+		str = Arrays.toString(presetStringList.toArray());
 		
-		for (int i = 0; i < 5; i++) {
-			str +=  Integer.toString(i+1 ) + ". " + presetStringList[i] + "\n";
-		}
 		for (String s : presetStringList) {
-			str += s;
-			str += "\n";
+			str += i + ". " + s;  
 		}
-		
 		return str;
 	}
 }
