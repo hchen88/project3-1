@@ -1,6 +1,7 @@
 package edu.project3;
 
 import java.awt.*;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -18,6 +19,14 @@ public class FavoriteContactFrame extends JPanel{
 	private String contactNumber;
 	private String contactEmail;
 	private String contactNote;
+	private static HashMap<String, FavoriteContactFrame> contactFrameMap = new HashMap<>();
+	
+	
+	
+	public static HashMap<String, FavoriteContactFrame> getHashMap() {
+		
+		return contactFrameMap;
+	}
 	/**
 	 * Initializes the JPanel instance variables to default values and image to null
 	 * */
@@ -32,7 +41,7 @@ public class FavoriteContactFrame extends JPanel{
 		   this.contactNote = "N/a";
 	
 	}
-	
+
 	/**
 	 * Initializes the JPanel instance variables to default values and gets image with given directory
 	 * @param directory - the location of the image to be displayed
@@ -110,9 +119,6 @@ public class FavoriteContactFrame extends JPanel{
 		  frame.setVisible(true);			
 	}
 	
-	
-
-  
   // helper method that scales the image based on window dimensions
   private static Dimension getScaledDimension(Dimension imgSize, Dimension windowSize) {
 
