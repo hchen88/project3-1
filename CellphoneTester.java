@@ -204,6 +204,7 @@ public class CellphoneTester {
 								String notes = in.nextLine().trim();
 								phoneBook.addContact(contactInput, new Contact(contactInput, phoneNumber, email, notes));
 								System.out.println("New contact added.");
+								go = false;
 							}else if(choice == "3") {
 								go = false;
 							}
