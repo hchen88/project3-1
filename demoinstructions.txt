@@ -10,6 +10,7 @@
 7. Call Squirtle by Name
 8. Call Pickachu by preset
 10. Call Kevin by Number
+11. Call a number 6 digits and 11 digits
 11.Display Callog
 12. Display PhoneBook.
 13. Delete Kevin from phoneBook.
