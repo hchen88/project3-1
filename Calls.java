@@ -4,75 +4,74 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Calls{
-	//Formats the call log with time stamp, name, number times called, incoming or outgoing.
+public class Calls {
 	
-	//private static ArrayList<String> callLog = new ArrayList<>(); // actual call log  , would be easier with Hash Map
+	private static HashMap<String, Calls > callLog = new HashMap<String, Calls>(); 
+	private ArrayList<String> timeStamps = new ArrayList<String>(); // string of array list 
+	private String callType;
+	private String nameNumber;
+	private boolean hasName;
+	private String timeStamp;
+	private int counter;
 	
-	private static HashMap<String, String> callLogMap = new HashMap<>(); // key string- contact name , value toString();
-	private static HashMap<String, Integer> callOccurences = new HashMap<>(); //key contact( phone number or contact name), value numOccurances
-	private int outgoingCounter = 0;
-	private int incomingCounter = 0;
-	private String callType = "";
-	
+	/**
+	 * method used to get callLog HashMap
+	 * @returns callLog 
+	 */
+	public static HashMap<String,Calls> getCallLog() {
+		return callLog;
+	}
 
-	public void makeCallNumber(String number) {
-		
-		this.outgoingCounter ++;
-		String outgoingTimeStamp = timeStamp(); 
-		callType = "(Outgoing)";
-		//need to implement call log
+	/**
+	 * Creates a calls object
+	 * @param callType - outgoing or incoming call
+	 * @param phoneNumber - name or number of contact
+	 * @param hasName - boolean if name is present in contact
+	 */
+	public Calls(String callType, String nameNumber, boolean hasName){
+		this.callType = callType;
+		this.nameNumber = nameNumber;
+		this.counter = 1;
+		this.hasName = hasName;
+		this.timeStamp = setTimeStamp();
+		timeStamps.add(this.timeStamp); //adds timeStamp to arraylist for detailed.
 	}
 	
 	
-	public void makeCallPreset(int presetNum) {
-		
-		
-		this.outgoingCounter ++;
-		String outgoingTimeStamp = timeStamp(); 
-		callType = "(Outgoing)";
-		//need to add element to ArrayList
-		String finalStr = "" + outgoingTimeStamp + callType;
-		callLog.add(finalStr);
-	}
-	
-	public void makeNonContactCall(String randomNumber) {
-		//needs conditonal if random call was called previously or not.
-		if(checkCallLog(randomNumber)) { //number was found
-			callOccurences.replace(randomNumber,callOccurences.get(randomNumber) + 1 ); //increments.
-			String outgoingTimeStamp = timeStamp(); //calls timeStamp method for current time
-			String callStr  = randomNumber + callOccurences.get(randomNumber) +"\n"+ outgoingTimeStamp + "(Outgoing)";
-			// String for call Line
-			callOccurences.replace(randomNumber, callStr); //replaces 
-		}else {
-			callOccurences.put(randomNumber, 1); // puts new randomnumber in with 1 occurance
-			String outgoingTimeStamp = timeStamp(); //calls timeStamp method for current time
-			String callStr = randomNumber + "\n"+ outgoingTimeStamp + "(Outgoing)"; // String for call Line
-			callOccurences.add(callStr); //appends call String variable to ArrayList	
-		}
-	
-		
+	/**
+	 * if phone number was already in call log, updates call log
+	 * @param phoneNumber - phonenumber as a string
+	 */
+	public void updateCallLog (String phoneNumber) {
+		this.counter ++;
+		this.timeStamp = setTimeStamp();
+		timeStamps.add(this.timeStamp); 
 	}
 	
 	/**
-	 * this is a method that increments the incomingCounter
-	 * every time a call is received.
+	 * this method gets the detailed calls
+	 * @return the formatted detailed calls
 	 */
-
-	public void receiveCall() {
-		
-		this.incomingCounter ++;
-		String incomingTimeStamp = timeStamp(); 
-		callType = "(Incoming)";
-		//need to implement call log
+	public static String getDetailedCalls() {
+		String str = "";
+		for(Calls s : callLog.values() ) {
+			for(String tS : s.timeStamps) {
+				if(s.hasName) {
+					str += s.nameNumber + "\n" + tS + "\t" + s.callType + "\n";
+				}else {
+					String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
+					str += numFormat + "\n" + tS + "\t" + s.callType + "\n";
+				}
+			}
+		}
+		return str;
 	}
 	
-	public ArrayList getCallLog () {
-		return callLog;
-	}
-	
-	
-	public String timeStamp() {
+	/**
+	 * sets the time stamp for each call, and adds to the array list of all the time stamps for that call
+	 * @returns timeStamp in String format
+	 */
+	public String setTimeStamp() {
 		
 		String now = LocalDateTime.now().toString();
 		String year = now.substring(0,4);
@@ -93,32 +92,40 @@ public class Calls{
 			timeFormat = hour_12 + ":" + minute + " AM";
 			}
 		
-		String timeStamp = month + "/" + day + "/" + year + "/t" + timeFormat;
-			
-		return timeStamp;
-
+		String timeStamp = month + "/" + day + "/" + year + "\t " + timeFormat;
 		
+		return timeStamp;
+ 
 	}
 	
-	public boolean checkCallLog(String contact) {
-		boolean found = false;
-		if (callLogMap.containsKey(contact)) {
-			found = true;
+	/**
+	 * this method displays the regular calls not the detailed calls
+	 * @return formatted regular calls
+	 */
+	public static String getShortCalls() {
+		String str = "";
+		for(Calls s : callLog.values() ) {
+			if(s.hasName) {
+				str += s.nameNumber +" (" + s.counter + ")\n" + s.timeStamp + "\t" + s.callType + "\n";
+			}else {
+				String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
+				str += numFormat +" (" + s.counter + ")\n" + s.timeStamp + "\t" + s.callType + "\n";
+			}
 		}
 		
-		return found;
-		
-	}
-
-	public String toString() { //to string for calls 
-		
-		String str = "";
-		
-		str = "\n";
-		
 		return str;
-		
 	}
 	
-
+	/**
+	 * Formats the call log
+	 */
+	public String toString() { //to string contains all detailed time stamps for 
+		String str = "";
+		for(Calls s : callLog.values() ) {
+			
+			str += s.nameNumber + "\n" + s.timeStamp + "\t" + s.callType + "\n";
+			}
+		
+		return str;
+	}
 }
