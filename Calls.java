@@ -59,8 +59,14 @@ public class Calls {
 				if(s.hasName) {
 					str += s.nameNumber + "\n" + tS + "\t" + s.callType + "\n";
 				}else {
-					String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
-					str += numFormat + "\n" + tS + "\t" + s.callType + "\n";
+					if (s.nameNumber.length() == 10) {
+						String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
+						str += numFormat + "\n" + tS + "\t" + s.callType + "\n";
+					}
+					else {
+						String numFormat = s.nameNumber.substring(0,3) + "-" + s.nameNumber.substring(3);
+						str += numFormat + "\n" + tS + "\t" + s.callType + "\n";
+					}
 				}
 			}
 		}
@@ -108,11 +114,15 @@ public class Calls {
 			if(s.hasName) {
 				str += s.nameNumber +" (" + s.counter + ")\n" + s.timeStamp + "\t" + s.callType + "\n";
 			}else {
-				String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
-				str += numFormat +" (" + s.counter + ")\n" + s.timeStamp + "\t" + s.callType + "\n";
+				if (s.nameNumber.length() == 10) {
+					String numFormat = "(" + s.nameNumber.substring(0,3) + ")" + s.nameNumber.substring(3,6) + "-" + s.nameNumber.substring(6); 
+					str += numFormat +" (" + s.counter + ")\n" + s.timeStamp + "\t" + s.callType + "\n";
+				}else {
+					String numFormat = s.nameNumber.substring(0,3) + "-" + s.nameNumber.substring(3);
+					str += numFormat + "\n" + s.timeStamp + "\t" + s.callType + "\n";
+				}
 			}
 		}
-		
 		return str;
 	}
 	
