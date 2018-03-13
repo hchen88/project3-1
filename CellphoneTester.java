@@ -4,16 +4,40 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TreeMap;
 import edu.project3.PhoneBook;
-
+/**
+ * Tests Cellphone Classes, Methods.
+ * @author Scott Arima, Howard Chen, Nora Koirala, Mario Bajenting
+ * @version 1.0.0
+ * @since 2018-03-13
+ *
+ */
 public class CellphoneTester {
 
-
-	public static String mainMenu() {
+	/**
+	 * this method prints out the main menu
+	 * @return
+	 */
+	private static String mainMenu() {
 		String mainMenu = "	---Main Menu--- \n1. Receive A Call \n2. Make A Call \n3. Modify Phonebook \n4. Display Phonebook \n5. Preset Favorites \n"
 				+ "6. Display Call Log \n7. Quit ";
 		return mainMenu;
 	}
+	/**
+	 * This method checks a phone number string for length of 10 or 7. 
+	 * @param String of phone number to check
+	 * @return boolean true if phone number entered is correct length and false if incorrect
+	 */
+	private static boolean checkPhoneNumberDigits(String phoneNumber) {
+		
+		if (phoneNumber.length() == 10 || phoneNumber.length() == 7 ) {
+			return true;
+		}else {
+			return false;
+		}
+			
+	}
 	
+
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String userInput; 
@@ -32,6 +56,7 @@ public class CellphoneTester {
 			phoneBookMap = PhoneBook.getPhoneBook();
 			
 			if (userInput.equals("1")) {
+				
 				if (!callLog.containsKey("5555555555")) { //no received calls in call log yet
 					callLog.put("5555555555", new Calls("Incoming", "5555555555", false)); //adds new call to call log
 					System.out.println("Received call from (555)555-5555");
@@ -45,26 +70,31 @@ public class CellphoneTester {
 				if (callInput.equals("1")) { //makes call by using phone number
 					System.out.println("Enter a ten digit phone number:");
 					String phoneNumber = in.nextLine().trim();
-					
-					if(!phoneBookMap.containsKey(phoneNumber)) { //is not in phone book
-						if(!callLog.containsKey(phoneNumber)) { //is not in phone book and not call log
-							callLog.put(phoneNumber, new Calls("Outgoing",phoneNumber, false)); //adds new call to call log
-							System.out.println("Making call to " + phoneNumber);
-							
-						}else {   //is not in  phone book but is in call log
-							callLog.get(phoneNumber).updateCallLog(phoneNumber); //adds call to call log.
-							System.out.println("Making call to" + phoneNumber);
+					if(checkPhoneNumberDigits(phoneNumber)) {
+						if(!phoneBookMap.containsKey(phoneNumber)) { //is not in phone book
+							if(!callLog.containsKey(phoneNumber)) { //is not in phone book and not call log
+								callLog.put(phoneNumber, new Calls("Outgoing",phoneNumber, false)); //adds new call to call log
+								System.out.println("Making call to " + phoneNumber);
+								
+							}else {   //is not in  phone book but is in call log
+								callLog.get(phoneNumber).updateCallLog(phoneNumber); //adds call to call log.
+								System.out.println("Making call to" + phoneNumber);
+							}
+						}else { //is in phone book 
+							if(!callLog.containsKey(phoneNumber)) { //is in phone book but not in callLog yet
+								String contactName = phoneBookMap.get(phoneNumber).getName();
+								callLog.put(phoneNumber, new Calls("Outgoing", contactName, true)); //adds new call to call log
+								System.out.println("Making call to" + contactName);
+							}else {  // is in phone book but already in call log.
+								callLog.get(phoneNumber).updateCallLog(phoneNumber); //adds call to call log.
+								String contactName = phoneBookMap.get(phoneNumber).getName();
+								System.out.println("Making call to" + contactName);  //done
+							}	
 						}
-					}else { //is in phone book 
-						if(!callLog.containsKey(phoneNumber)) { //is in phone book but not in callLog yet
-							String contactName = phoneBookMap.get(phoneNumber).getName();
-							callLog.put(phoneNumber, new Calls("Outgoing", contactName, true)); //adds new call to call log
-							System.out.println("Making call to" + contactName);
-						}else {  // is in phone book but already in call log.
-							callLog.get(phoneNumber).updateCallLog(phoneNumber); //adds call to call log.
-							String contactName = phoneBookMap.get(phoneNumber).getName();
-							System.out.println("Making call to" + contactName);  //done
-						}	
+					}else {
+						System.out.println("Phone number entered is not a 10 digit or 7 digit phone number");
+						System.out.println("Back to Main menu");
+
 					}
 					
 				}else if (callInput.equals("2")) { //makes call by using contact 
@@ -272,5 +302,6 @@ public class CellphoneTester {
 		}while (!userInput.equals("7")); 
 		System.out.println("Goodbye");
 		in.close();
-	}
+	
+}
 }

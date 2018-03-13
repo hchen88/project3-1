@@ -3,7 +3,13 @@ package edu.project3;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * This class logs all calls creates a Calls object to form a Call Log
+ * @author Scott Arima, Howard Chen, Nora Koirala, Mario Bajenting
+ * @version 1.0.0
+ * @since 2018-03-13
+ *
+ */
 public class Calls {
 	
 	private static HashMap<String, Calls > callLog = new HashMap<String, Calls>(); 

@@ -1,79 +1,101 @@
 package edu.project3;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+/**
+ * This class Adds, delete, rearrange, and displays presetlist
+ * @author Scott Arima, Howard Chen, Nora Koirala, Mario Bajenting
+ *  @version 1.0.0
+ * @since 2018-03-13
+ *
+ */
 
 public class PresetList {
-	String copy = "";
-	private static Contact[] presetContactList = new Contact[5];
-	private static ArrayList<String> presetStringList = new ArrayList<String>();
+	/**
+	 * Adds, delete, rearrange, and displays preset list
+	 */
 
+	static String copy = "";
+	static Contact copyObj = new Contact();
+	
+	private static Contact[] presetContactList = new Contact[5];
+	private static String[] presetStringList = new String[5];
 	
 	/**
-	 * makes preset list object
+	 * creates a new preset list
 	 */
+	
 	public PresetList() {
-
+		
 	}
 	
 	/**
-	 * adds preset to the array
-	 * @param presetNum - preset number
-	 * @param contactObj - contact object
+	 * adds a preset favorite
+	 * @param presetNum
+	 * @param contactObj
 	 */
 	public static void addPreset(int presetNum, Contact contactObj) {
-		presetStringList.add(presetNum - 1, contactObj.getName());
+		
+		presetStringList[presetNum - 1 ] =  contactObj.getName();
 		presetContactList[presetNum-1] = contactObj;
+		
 	}
 	
 	/**
-	 * deletes preset in the array
-	 * @param presetNum - preset number
+	 * removes a preset favorite
+	 * @param presetNum
 	 */
 	public static void deletePreset(int presetNum) {
-		presetStringList.remove(presetNum);
+		presetStringList[presetNum - 1] =  null;
 		presetContactList[presetNum-1] = null;
+		
 	}
 	
 	/**
-	 * rearranges preset
-	 * @param presetNum1 - first preset number
-	 * @param presetNum2 - second preset number
+	 * rearranges preset favorites
+	 * @param presetNum1
+	 * @param presetNum2
 	 */
 	
 	public static void rearrangePreset(int presetNum1, int presetNum2) {
-		
-		String copy = presetStringList.get(presetNum1-1); 
-		String copy2 = presetStringList.get(presetNum2-1);
-		Contact copyObj = presetContactList[presetNum1 - 1];
-		presetStringList.remove(presetNum1-1);
-		presetStringList.add(presetNum1-1, copy);
-		presetStringList.remove(presetNum2-1);
-		presetStringList.add(presetNum2 -1, copy2);
+		copy = presetStringList[presetNum1 - 1];
+		copyObj = presetContactList[presetNum1 - 1];
+		presetStringList[presetNum1 -1] = presetStringList[presetNum2 - 1];
 		presetContactList[presetNum1 -1] = presetContactList[presetNum2 - 1];
+		presetStringList[presetNum2 - 1] = copy;
 		presetContactList[presetNum2 - 1] = copyObj;
 		
 	}
 	
 	/**
-	 * gets the preset list
-	 * @return - the preset list
+	 * returns the preset favorite contact in order to call
+	 * @param presetNum
+	 * @return
 	 */
-	public static Contact[] getPresetContactList() {
-		return presetContactList;
+	public Contact getPreset(int presetNum) {
+		 return presetContactList[presetNum - 1]; 
 	}
 	
 	/**
-	 * Formats the preset list
+	 * formats and returns toString
 	 */
 	public String toString() {
-		String str = "";
-		int i = 0;
-		str = Arrays.toString(presetStringList.toArray());
-		
-		for (String s : presetStringList) {
-			str += i + ". " + s;  
+		String str = "Presets:\n";
+		for (int i = 0; i < presetStringList.length; i++) {
+			int contactNum = i + 1;
+			str += Integer.toString(contactNum) + ". ";
+			if (presetStringList[i] == null) {
+				str += " \n";
+			}
+			else {
+				str += presetStringList[i] + "\n";
+			}
 		}
+		
 		return str;
 	}
+
+	public static Contact[] getPresetContactList() {
+		
+		return presetContactList;
+	}
+	
+
 }

@@ -1,7 +1,15 @@
 package edu.project3;
 
 import java.util.TreeMap;
-
+/**
+ * Stores all contacts
+ * Adds/Deletes contact
+ * Displays contacts in alphabetical order
+ * @author Scott Arima, Howard Chen, Nora Koirala, Mario Bajenting
+ * @version 1.0.0
+ * @since 2018-03-13
+ *
+ */
 public class PhoneBook {
 	
 	/**

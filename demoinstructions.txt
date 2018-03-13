@@ -1,0 +1,17 @@
+1. add 2 contacts
+	name - Squirtle
+	name - Pickachu
+	name - Kevin number 562555555
+2. Set Preset for Squirtle to 1 with picture
+3. Set Preset for Pickachu to 2 with picture
+4. Swap Preset 1 with 2
+5. Call random number
+6. Receive phone call
+7. Call Squirtle by Name
+8. Call Pickachu by preset
+10. Call Kevin by Number
+11.Display Callog
+12. Display PhoneBook.
+13. Delete Kevin from phoneBook.
+14. Display PhoneBook
+15. Display Presets
