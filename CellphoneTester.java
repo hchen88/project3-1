@@ -18,7 +18,6 @@ public class CellphoneTester {
 		Scanner in = new Scanner(System.in);
 		String userInput; 
 		PhoneBook phoneBook = new PhoneBook();
-		//PresetList presetList = new PresetList();
 		String[] presetList = new String[5];
 		HashMap<String, Calls>  callLog = Calls.getCallLog();
 		TreeMap<String, Contact> phoneBookMap = PhoneBook.getPhoneBook();
@@ -181,11 +180,34 @@ public class CellphoneTester {
 					System.out.println("Enter contact name to display:");
 					String contactName = in.nextLine().trim();
 					boolean found = PhoneBook.checkPhonebook(contactName);
-					if (found) {
-						Contact receivedContact = PhoneBook.getContact(contactName);
-						System.out.println(receivedContact);
-					}else {
-						System.out.println("Contact doesn't exist.");
+					boolean go = true;
+					while(go) {
+						if (found) {
+							Contact receivedContact = PhoneBook.getContact(contactName);
+							System.out.println(receivedContact);
+						}else {
+							System.out.println("Contact doesn't exist.");
+							System.out.println("1. Would you like to re-enter contact.\n2. Create a new contact.\n3. Return to main menu.");
+							String choice = in.nextLine().trim();
+							if (choice == "1") {
+								System.out.println("Enter new contact name to find:");
+								String contactInput = in.nextLine().trim();
+								PhoneBook.checkPhonebook(contactInput);
+							}else if(choice == "2") {
+								System.out.println("Enter the name of the contact:");
+								String contactInput = in.nextLine().trim();
+								System.out.println("Enter the phone number:");
+								String phoneNumber = in.nextLine().trim();
+								System.out.println("Enter email:");
+								String email = in.nextLine().trim();
+								System.out.println("Enter any notes:");
+								String notes = in.nextLine().trim();
+								phoneBook.addContact(contactInput, new Contact(contactInput, phoneNumber, email, notes));
+								System.out.println("New contact added.");
+							}else if(choice == "3") {
+								go = false;
+							}
+						}
 					}
 				}
 			}
