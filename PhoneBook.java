@@ -92,10 +92,14 @@ Displays contacts in alphabetical order
 	public String toString() { //all contact information
 		String str = "";
         for(Contact c : phoneBookMap.values()){
-        	String numFormat = "(" + c.getNum().substring(0,3) + ")" + c.getNum().substring(3,6) + "-" + c.getNum().substring(6); 
-            str += c.getName() + "\t" + numFormat + "\t" + c.getEmail() + "\t" + c.getNotes() + "\n";
-
+        	if(c.getNum().length() == 10) {
+        		String numFormat = "(" + c.getNum().substring(0,3) + ")" + c.getNum().substring(3,6) + "-" + c.getNum().substring(6); 
+        		str += c.getName() + "\t" + numFormat + "\t" + c.getEmail() + "\t" + c.getNotes() + "\n";
+        	}else {
+        		String numFormat = c.getNum().substring(0,3) + "-" + c.getNum().substring(3);
+        		str += c.getName() + "\t" + numFormat + "\t" + c.getEmail() + "\t" + c.getNotes() + "\n";
+        	}
         }
 	    return str;
 	}
-}
+
